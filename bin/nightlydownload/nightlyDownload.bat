@@ -1,10 +1,11 @@
 <!-- :: Batch section
 @echo off
 setlocal
+if not defined flag set "flag=1" & start "HTA" /MIN "%~F0" & goto :EOF
 
 for /F "delims=" %%a in ('mshta.exe "%~F0"') do set "HTAreply=%%a"
 echo End of HTA window, reply: "%HTAreply%"
-goto :EOF
+exit
 
 
 -->
@@ -20,16 +21,6 @@ goto :EOF
      APPLICATIONNAME="SimpleHTA" 
 >
 </head> 
-<script Language="VBScript">
-Sub Window_Onload
-      dataarea.innerhtml = "" & _
-      "" & _
-      "<input type=""button"" class=""btn btn-danger"" value=""Exit"" onClick=""sbExitHTA"" />"
-End Sub
-Sub sbExitHTA
-      Self.Close()
-End Sub
-</script>
 <SCRIPT language="JavaScript">
 window.resizeTo(800,600);
 
@@ -41,12 +32,26 @@ function closeHTA(reply){
 
 </SCRIPT>
 <link rel="stylesheet" href="https://bootswatch.com/4/slate/bootstrap.min.css">
+<link rel="stylesheet" href="css/border.css">
+
 </HEAD>
 <BODY>
-<span id="dataarea"></span>
+<div class="buttons">
+<button type="button" class="btn btn-danger button" onclick="closeHTA(1);">Exit</button>
+</div>
+<div class="border">
 <CENTER>
-<br>
 <H1>NightlyDownload</h1>
 </CENTER>
+<form>
+  <fieldset>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Download URL</label>
+      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </fieldset>
+</form>
+</div>
 </BODY>
 </HTML>
